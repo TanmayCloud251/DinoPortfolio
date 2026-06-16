@@ -472,7 +472,9 @@ const DinoPortfolio: React.FC = () => {
           <div style={{ marginTop: '20px' }}>
             <h1 style={{ fontSize: '20px', marginBottom: '20px', color: theme.text }}>GAME COMPLETED</h1>
             <p style={{ fontSize: '10px', marginBottom: '30px' }}>THANKS FOR VISITING!</p>
-            <button className="pixel-btn">DOWNLOAD RESUME</button>
+            <a href="/resume.pdf" download="Tanmay_Mishra_Resume.pdf" style={{ textDecoration: 'none' }}>
+              <button className="pixel-btn">DOWNLOAD RESUME</button>
+            </a>
             <button className="pixel-btn" onClick={(e) => { e.stopPropagation(); setSection(0); }}>PLAY AGAIN</button>
           </div>
         )}
