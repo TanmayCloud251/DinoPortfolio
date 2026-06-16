@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 /**
  * DinoPortfolio.tsx
  * A single-file React portfolio themed after the Chrome Dinosaur game.
- * Updated: Dino moves horizontally across the screen based on section progress.
+ * Personalized for Tanmay Mishra - Full Stack Developer.
  */
 
 // --- TYPES ---
@@ -115,20 +115,22 @@ const DinoPortfolio: React.FC = () => {
   const [section, setSection] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [dinoFrame, setDinoFrame] = useState(1);
-  const [direction, setDirection] = useState(1); // 1 for right, -1 for left
+  const [direction, setDirection] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
   const { initAudio, playStep, playClear } = useAudio();
 
   const sections = [
     { title: 'WELCOME', id: '0000' },
-    { title: 'ABOUT', id: '0001' },
-    { title: 'SKILLS', id: '0002' },
-    { title: 'PROJECTS', id: '0003' },
-    { title: 'CONTACT', id: '0004' },
-    { title: 'COMPLETE', id: '0005' }
+    { title: 'IDENTITY', id: '0001' },
+    { title: 'ABOUT', id: '0002' },
+    { title: 'SKILLS', id: '0003' },
+    { title: 'PROJECTS', id: '0004' },
+    { title: 'MUSIC', id: '0005' },
+    { title: 'CONTACT', id: '0006' },
+    { title: 'COMPLETE', id: '0007' }
   ];
 
-  const currentBiome = section >= 2 && section <= 4 ? 2 : 0;
+  const currentBiome = section >= 3 && section <= 6 ? 2 : 0;
   const isDark = currentBiome >= 2;
   const theme = {
     bg: isDark ? '#202124' : '#ffffff',
@@ -137,7 +139,6 @@ const DinoPortfolio: React.FC = () => {
     cloud: 'rgba(83,83,83,0.12)'
   };
 
-  // Dino Running Animation
   useEffect(() => {
     if (!isTransitioning) {
       setDinoFrame(1);
@@ -166,7 +167,7 @@ const DinoPortfolio: React.FC = () => {
       setTimeout(() => {
         setIsTransitioning(false);
       }, 200);
-    }, 800); // Duration matches CSS transition
+    }, 800);
   }, [section, isTransitioning, isMuted, playClear, initAudio, sections.length]);
 
   useEffect(() => {
@@ -178,7 +179,6 @@ const DinoPortfolio: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleNavigate]);
 
-  // Position calculation: section 0 is at 50px, section N-1 is at 80% + 50px
   const dinoLeft = `calc(50px + ${(section / (sections.length - 1)) * 80}%)`;
   const formattedScore = `${String(section).padStart(2, '0')}.00`;
 
@@ -208,14 +208,24 @@ const DinoPortfolio: React.FC = () => {
           50% { opacity: 0; }
           100% { opacity: 1; }
         }
-        .pixel-chip { border: 2px solid ${theme.text}; padding: 8px 12px; margin: 4px; font-size: 10px; display: inline-block; }
-        .pixel-card { border: 2px solid ${theme.text}; padding: 16px; margin-bottom: 12px; cursor: pointer; transition: opacity 0.2s; }
+        @keyframes wave {
+          0%, 100% { height: 5px; }
+          50% { height: 30px; }
+        }
+        .pixel-chip { border: 2px solid ${theme.text}; padding: 4px 6px; margin: 2px; font-size: 6px; display: inline-block; }
+        .pixel-card { border: 2px solid ${theme.text}; padding: 10px; cursor: pointer; transition: opacity 0.2s; text-align: left; width: 100%; box-sizing: border-box; }
         .pixel-card:hover { opacity: 0.7; }
-        .pixel-btn { border: 2px solid ${theme.text}; padding: 12px 24px; cursor: pointer; font-family: inherit; background: transparent; color: inherit; margin: 8px; font-size: 12px; }
+        .pixel-btn { border: 2px solid ${theme.text}; padding: 12px 24px; cursor: pointer; font-family: inherit; background: transparent; color: inherit; margin: 8px; font-size: 10px; }
         .pixel-btn:hover { opacity: 0.7; }
-        ::-webkit-scrollbar { width: 6px; }
+        .music-bar { width: 4px; background: ${theme.text}; margin: 0 2px; display: inline-block; animation: wave 1s ease-in-out infinite; }
+        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
+        ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: ${theme.text}; }
+        @media (max-width: 600px) {
+          .grid-layout { grid-template-columns: 1fr; gap: 10px; }
+          .pixel-chip { font-size: 5px; }
+        }
       `}</style>
 
       {/* --- SKY --- */}
@@ -234,8 +244,8 @@ const DinoPortfolio: React.FC = () => {
       </div>
 
       {/* --- HUD --- */}
-      <div style={{ position: 'absolute', top: '20px', right: '20px', fontSize: '14px', textAlign: 'right' }}>
-        <div style={{ opacity: 0.6, fontSize: '10px', marginBottom: '4px' }}>HI 05.00</div>
+      <div style={{ position: 'absolute', top: '20px', right: '20px', fontSize: '12px', textAlign: 'right', zIndex: 100 }}>
+        <div style={{ opacity: 0.6, fontSize: '8px', marginBottom: '4px' }}>HI 07.00</div>
         <div>{formattedScore}</div>
         <div style={{ marginTop: '10px', cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); setIsMuted(!isMuted); }}>
           {isMuted ? '🔇' : '🔊'}
@@ -248,10 +258,10 @@ const DinoPortfolio: React.FC = () => {
         top: '10%',
         left: '50%',
         transform: 'translateX(-50%)',
-        width: 'min(560px, 88vw)',
+        width: 'min(720px, 94vw)',
         height: 'calc(80% - 100px)',
         overflowY: 'auto',
-        padding: '20px',
+        padding: '10px',
         textAlign: 'center',
         zIndex: 10,
         opacity: isTransitioning ? 0 : 1,
@@ -262,57 +272,82 @@ const DinoPortfolio: React.FC = () => {
       }}>
         {section === 0 && (
           <div style={{ marginTop: '40px' }}>
-            <h1 style={{ fontSize: '24px', marginBottom: '20px' }}>WELCOME</h1>
-            <p style={{ fontSize: '14px', lineHeight: '2' }}>[YOUR NAME]</p>
-            <p style={{ fontSize: '10px', marginTop: '40px', animation: 'blink 1s infinite' }}>CLICK LEFT / RIGHT TO NAVIGATE</p>
+            <h1 style={{ fontSize: '28px', marginBottom: '30px', color: theme.text }}>WELCOME</h1>
+            <p style={{ fontSize: '10px', marginTop: '40px', animation: 'blink 1.5s infinite' }}>CLICK LEFT / RIGHT TO NAVIGATE</p>
           </div>
         )}
 
         {section === 1 && (
-          <div>
-            <h2 style={{ fontSize: '18px', marginBottom: '20px' }}>ABOUT</h2>
-            <p style={{ fontSize: '12px', lineHeight: '1.6' }}>
-              I am a developer based in [City]. I enjoy building web applications, experimenting with AI, and creating unique user experiences.
+          <div style={{ marginTop: '20px' }}>
+            <h1 style={{ fontSize: '24px', marginBottom: '10px', color: theme.text }}>TANMAY MISHRA</h1>
+            <h2 style={{ fontSize: '14px', marginBottom: '30px', opacity: 0.8, color: theme.text }}>FULL STACK DEV</h2>
+            <p style={{ fontSize: '10px', maxWidth: '400px', lineHeight: '1.8', margin: '0 auto' }}>
+              I build scalable web applications, AI-powered tools, and developer-friendly experiences.
             </p>
           </div>
         )}
 
         {section === 2 && (
           <div>
-            <h2 style={{ fontSize: '18px', marginBottom: '20px' }}>SKILLS</h2>
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-              {['React', 'JavaScript', 'Node.js', 'Express', 'MongoDB', 'Python', 'C++', 'Git', 'Tailwind', 'Docker'].map(s => (
-                <div key={s} className="pixel-chip">{s}</div>
-              ))}
-            </div>
+            <h2 style={{ fontSize: '16px', marginBottom: '15px', color: theme.text }}>ABOUT ME</h2>
+            <p style={{ fontSize: '10px', lineHeight: '1.8', textAlign: 'left', marginBottom: '15px' }}>
+              I am a B.Tech Information Technology student pursuing Software Engineering internships. 
+              I enjoy building full-stack applications, backend systems, and AI products.
+            </p>
+            <p style={{ fontSize: '10px', lineHeight: '1.8', textAlign: 'left', opacity: 0.9 }}>
+              Experience: Backend & DevOps Engineering Intern. 
+              Worked with Node.js, Docker, Nginx, and Linux to build scalable services and REST APIs.
+            </p>
           </div>
         )}
 
         {section === 3 && (
           <div style={{ width: '100%' }}>
-            <h2 style={{ fontSize: '18px', marginBottom: '20px' }}>PROJECTS</h2>
-            <div className="pixel-card">
-              <div style={{ fontSize: '14px', marginBottom: '8px' }}>PROJECT ALPHA</div>
-              <div style={{ fontSize: '10px', opacity: 0.8 }}>Short description of the project.</div>
-            </div>
-            <div className="pixel-card">
-              <div style={{ fontSize: '14px', marginBottom: '8px' }}>PROJECT BETA</div>
-              <div style={{ fontSize: '10px', opacity: 0.8 }}>Another cool project here.</div>
+            <h2 style={{ fontSize: '16px', marginBottom: '20px', color: theme.text }}>SKILLS</h2>
+            <div className="grid-layout">
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ fontSize: '8px', opacity: 0.6, marginBottom: '8px' }}>LANGUAGE</div>
+                {['JavaScript', 'Python', 'C++', 'SQL'].map(s => <span key={s} className="pixel-chip">{s}</span>)}
+              </div>
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ fontSize: '8px', opacity: 0.6, marginBottom: '8px' }}>FRONTEND</div>
+                {['React.js', 'Next.js', 'Tailwind', 'HTML', 'CSS'].map(s => <span key={s} className="pixel-chip">{s}</span>)}
+              </div>
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ fontSize: '8px', opacity: 0.6, marginBottom: '8px' }}>BACKEND</div>
+                {['Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'Appwrite'].map(s => <span key={s} className="pixel-chip">{s}</span>)}
+              </div>
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ fontSize: '8px', opacity: 0.6, marginBottom: '8px' }}>DEVOPS</div>
+                {['Docker', 'Nginx', 'Linux', 'Git', 'Cron Jobs'].map(s => <span key={s} className="pixel-chip">{s}</span>)}
+              </div>
             </div>
           </div>
         )}
 
         {section === 4 && (
-          <div>
-            <h2 style={{ fontSize: '18px', marginBottom: '20px' }}>CONTACT</h2>
-            <div style={{ textAlign: 'left', fontSize: '12px' }}>
-              <div style={{ marginBottom: '20px' }}>
-                <div style={{ opacity: 0.6, fontSize: '10px', marginBottom: '4px' }}>EMAIL</div>
-                <a href="mailto:hello@example.com" style={{ color: 'inherit', textDecoration: 'none' }}>hello@example.com</a>
+          <div style={{ width: '100%' }}>
+            <h2 style={{ fontSize: '16px', marginBottom: '20px', color: theme.text }}>PROJECTS</h2>
+            <div className="grid-layout">
+              <div className="pixel-card" onClick={() => window.open('https://video-tube-frontend-sepia.vercel.app/', '_blank')}>
+                <div style={{ fontSize: '10px', marginBottom: '5px' }}>VIDEOTUBE</div>
+                <div style={{ fontSize: '7px', lineHeight: '1.3', marginBottom: '5px' }}>YouTube clone. Auth, uploads, comments.</div>
+                <div style={{ fontSize: '6px', opacity: 0.7 }}>React · Node · MongoDB</div>
               </div>
-              <div style={{ marginBottom: '20px' }}>
-                <div style={{ opacity: 0.6, fontSize: '10px', marginBottom: '4px' }}>GITHUB</div>
-                <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>github.com/username</a>
+              <div className="pixel-card">
+                <div style={{ fontSize: '10px', marginBottom: '5px' }}>RESCAN AI</div>
+                <div style={{ fontSize: '7px', lineHeight: '1.3', marginBottom: '5px' }}>ATS analyzer. Parses & scores resumes.</div>
+                <div style={{ fontSize: '6px', opacity: 0.7 }}>React · Gemini · NLP</div>
+              </div>
+              <div className="pixel-card">
+                <div style={{ fontSize: '10px', marginBottom: '5px' }}>CG CHATBOT</div>
+                <div style={{ fontSize: '7px', lineHeight: '1.3', marginBottom: '5px' }}>Voice-enabled. STT/TTS, Theme Customization.</div>
+                <div style={{ fontSize: '6px', opacity: 0.7 }}>Voice Conv · AI · Theme</div>
+              </div>
+              <div className="pixel-card" onClick={() => window.open('https://mega-blog-indol.vercel.app/', '_blank')}>
+                <div style={{ fontSize: '10px', marginBottom: '5px' }}>MEGA BLOG</div>
+                <div style={{ fontSize: '7px', lineHeight: '1.3', marginBottom: '5px' }}>Modern blog. Full CRUD & Appwrite.</div>
+                <div style={{ fontSize: '6px', opacity: 0.7 }}>React · Appwrite · Tailwind</div>
               </div>
             </div>
           </div>
@@ -320,7 +355,44 @@ const DinoPortfolio: React.FC = () => {
 
         {section === 5 && (
           <div>
-            <h2 style={{ fontSize: '18px', marginBottom: '20px' }}>GAME COMPLETED</h2>
+            <h2 style={{ fontSize: '16px', marginBottom: '20px', color: theme.text }}>BEYOND CODE</h2>
+            <p style={{ fontSize: '10px', lineHeight: '1.8', marginBottom: '20px' }}>
+              I am also a singer and guitarist who regularly performs at college events. 
+              I have performed guitar on DD Chhattisgarh television!
+            </p>
+            <div style={{ display: 'flex', alignItems: 'flex-end', height: '40px', justifyContent: 'center' }}>
+              {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+                <div key={i} className="music-bar" style={{ animationDelay: `${i * 0.1}s`, height: `${10 + Math.random() * 20}px` }} />
+              ))}
+              <span style={{ fontSize: '20px', marginLeft: '10px' }}>🎸</span>
+            </div>
+          </div>
+        )}
+
+        {section === 6 && (
+          <div style={{ width: '100%' }}>
+            <h2 style={{ fontSize: '16px', marginBottom: '20px', color: theme.text }}>CONTACT</h2>
+            <div style={{ textAlign: 'left', maxWidth: '300px', margin: '0 auto' }}>
+              <div style={{ marginBottom: '20px' }}>
+                <div style={{ fontSize: '8px', opacity: 0.6, marginBottom: '5px' }}>EMAIL</div>
+                <a href="mailto:tanmay@example.com" style={{ fontSize: '10px', color: 'inherit', textDecoration: 'none', borderBottom: `1px solid ${theme.text}` }}>tanmay@example.com</a>
+              </div>
+              <div style={{ marginBottom: '20px' }}>
+                <div style={{ fontSize: '8px', opacity: 0.6, marginBottom: '5px' }}>GITHUB</div>
+                <a href="https://github.com/TanmayCloud251" target="_blank" style={{ fontSize: '10px', color: 'inherit', textDecoration: 'none', borderBottom: `1px solid ${theme.text}` }}>github.com/TanmayCloud251</a>
+              </div>
+              <div style={{ marginBottom: '20px' }}>
+                <div style={{ fontSize: '8px', opacity: 0.6, marginBottom: '5px' }}>LINKEDIN</div>
+                <a href="https://linkedin.com/in/tanmay" target="_blank" style={{ fontSize: '10px', color: 'inherit', textDecoration: 'none', borderBottom: `1px solid ${theme.text}` }}>linkedin.com/in/tanmay</a>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {section === 7 && (
+          <div style={{ marginTop: '20px' }}>
+            <h1 style={{ fontSize: '20px', marginBottom: '20px', color: theme.text }}>GAME COMPLETED</h1>
+            <p style={{ fontSize: '10px', marginBottom: '30px' }}>THANKS FOR VISITING!</p>
             <button className="pixel-btn">DOWNLOAD RESUME</button>
             <button className="pixel-btn" onClick={(e) => { e.stopPropagation(); setSection(0); }}>PLAY AGAIN</button>
           </div>
@@ -335,7 +407,6 @@ const DinoPortfolio: React.FC = () => {
         height: '100px',
         pointerEvents: 'none'
       }}>
-        {/* GROUND */}
         <div style={{
           position: 'absolute',
           bottom: '20px',
