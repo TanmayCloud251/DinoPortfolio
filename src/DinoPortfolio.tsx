@@ -243,13 +243,38 @@ const DinoPortfolio: React.FC = () => {
         ))}
       </div>
 
+      {/* --- AUDIO TOGGLE --- */}
+      <div 
+        style={{ position: 'absolute', top: '20px', left: '20px', cursor: 'pointer', zIndex: 100, padding: '8px', border: `2px solid ${theme.text}` }}
+        onClick={(e) => { e.stopPropagation(); setIsMuted(!isMuted); }}
+      >
+        {isMuted ? (
+          <svg width="20" height="20" viewBox="0 0 20 20">
+            <rect x="2" y="6" width="4" height="8" fill={theme.text} />
+            <rect x="6" y="4" width="4" height="12" fill={theme.text} />
+            <rect x="10" y="2" width="4" height="16" fill={theme.text} />
+            <rect x="14" y="8" width="2" height="4" fill={theme.text} />
+            <rect x="16" y="6" width="2" height="2" fill={theme.text} />
+            <rect x="16" y="12" width="2" height="2" fill={theme.text} />
+            {/* Cross */}
+            <rect x="14" y="14" width="6" height="2" fill={theme.bg} transform="rotate(45 17 15)" />
+            <rect x="14" y="14" width="6" height="2" fill={theme.text} transform="rotate(-45 17 15)" />
+          </svg>
+        ) : (
+          <svg width="20" height="20" viewBox="0 0 20 20">
+            <rect x="2" y="6" width="4" height="8" fill={theme.text} />
+            <rect x="6" y="4" width="4" height="12" fill={theme.text} />
+            <rect x="10" y="2" width="4" height="16" fill={theme.text} />
+            <rect x="16" y="8" width="2" height="4" fill={theme.text} />
+            <rect x="18" y="6" width="2" height="8" fill={theme.text} />
+          </svg>
+        )}
+      </div>
+
       {/* --- HUD --- */}
       <div style={{ position: 'absolute', top: '20px', right: '20px', fontSize: '12px', textAlign: 'right', zIndex: 100 }}>
         <div style={{ opacity: 0.6, fontSize: '8px', marginBottom: '4px' }}>HI 07.00</div>
         <div>{formattedScore}</div>
-        <div style={{ marginTop: '10px', cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); setIsMuted(!isMuted); }}>
-          {isMuted ? '🔇' : '🔊'}
-        </div>
       </div>
 
       {/* --- CONTENT AREA --- */}
@@ -329,20 +354,20 @@ const DinoPortfolio: React.FC = () => {
           <div style={{ width: '100%' }}>
             <h2 style={{ fontSize: '16px', marginBottom: '20px', color: theme.text }}>PROJECTS</h2>
             <div className="grid-layout">
-              <div className="pixel-card" onClick={() => window.open('https://video-tube-frontend-sepia.vercel.app/', '_blank')}>
-                <div style={{ fontSize: '10px', marginBottom: '5px' }}>VIDEOTUBE</div>
-                <div style={{ fontSize: '7px', lineHeight: '1.3', marginBottom: '5px' }}>YouTube clone. Auth, uploads, comments.</div>
-                <div style={{ fontSize: '6px', opacity: 0.7 }}>React · Node · MongoDB</div>
-              </div>
-              <div className="pixel-card">
-                <div style={{ fontSize: '10px', marginBottom: '5px' }}>RESCAN AI</div>
-                <div style={{ fontSize: '7px', lineHeight: '1.3', marginBottom: '5px' }}>ATS analyzer. Parses & scores resumes.</div>
-                <div style={{ fontSize: '6px', opacity: 0.7 }}>React · Gemini · NLP</div>
-              </div>
               <div className="pixel-card">
                 <div style={{ fontSize: '10px', marginBottom: '5px' }}>CG CHATBOT</div>
                 <div style={{ fontSize: '7px', lineHeight: '1.3', marginBottom: '5px' }}>Voice-enabled. STT/TTS, Theme Customization.</div>
                 <div style={{ fontSize: '6px', opacity: 0.7 }}>Voice Conv · AI · Theme</div>
+              </div>
+              <div className="pixel-card" onClick={() => window.open('https://rescan.netlify.app/', '_blank')}>
+                <div style={{ fontSize: '10px', marginBottom: '5px' }}>RESCAN AI</div>
+                <div style={{ fontSize: '7px', lineHeight: '1.3', marginBottom: '5px' }}>ATS analyzer. Parses & scores resumes.</div>
+                <div style={{ fontSize: '6px', opacity: 0.7 }}>React · Gemini · NLP</div>
+              </div>
+              <div className="pixel-card" onClick={() => window.open('https://video-tube-frontend-sepia.vercel.app/', '_blank')}>
+                <div style={{ fontSize: '10px', marginBottom: '5px' }}>VIDEOTUBE</div>
+                <div style={{ fontSize: '7px', lineHeight: '1.3', marginBottom: '5px' }}>YouTube clone. Auth, uploads, comments.</div>
+                <div style={{ fontSize: '6px', opacity: 0.7 }}>React · Node · MongoDB</div>
               </div>
               <div className="pixel-card" onClick={() => window.open('https://mega-blog-indol.vercel.app/', '_blank')}>
                 <div style={{ fontSize: '10px', marginBottom: '5px' }}>MEGA BLOG</div>
@@ -372,18 +397,72 @@ const DinoPortfolio: React.FC = () => {
         {section === 6 && (
           <div style={{ width: '100%' }}>
             <h2 style={{ fontSize: '16px', marginBottom: '20px', color: theme.text }}>CONTACT</h2>
-            <div style={{ textAlign: 'left', maxWidth: '300px', margin: '0 auto' }}>
-              <div style={{ marginBottom: '20px' }}>
-                <div style={{ fontSize: '8px', opacity: 0.6, marginBottom: '5px' }}>EMAIL</div>
-                <a href="mailto:tanmay@example.com" style={{ fontSize: '10px', color: 'inherit', textDecoration: 'none', borderBottom: `1px solid ${theme.text}` }}>tanmay@example.com</a>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', maxWidth: '300px', margin: '0 auto', textAlign: 'left' }}>
+              {/* Email */}
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <svg width="18" height="14" viewBox="0 0 18 14" style={{ marginRight: '12px', flexShrink: 0 }}>
+                  <rect x="0" y="0" width="18" height="2" fill={theme.text} />
+                  <rect x="0" y="12" width="18" height="2" fill={theme.text} />
+                  <rect x="0" y="0" width="2" height="14" fill={theme.text} />
+                  <rect x="16" y="0" width="2" height="14" fill={theme.text} />
+                  <rect x="2" y="2" width="2" height="2" fill={theme.text} />
+                  <rect x="14" y="2" width="2" height="2" fill={theme.text} />
+                  <rect x="4" y="4" width="2" height="2" fill={theme.text} />
+                  <rect x="12" y="4" width="2" height="2" fill={theme.text} />
+                  <rect x="6" y="6" width="6" height="2" fill={theme.text} />
+                </svg>
+                <div>
+                  <div style={{ fontSize: '7px', opacity: 0.6, marginBottom: '2px' }}>EMAIL</div>
+                  <a href="mailto:tanmaycloud251@gmail.com" style={{ fontSize: '8px', color: 'inherit', textDecoration: 'none', borderBottom: `1px solid ${theme.text}` }}>tanmaycloud251@gmail.com</a>
+                </div>
               </div>
-              <div style={{ marginBottom: '20px' }}>
-                <div style={{ fontSize: '8px', opacity: 0.6, marginBottom: '5px' }}>GITHUB</div>
-                <a href="https://github.com/TanmayCloud251" target="_blank" style={{ fontSize: '10px', color: 'inherit', textDecoration: 'none', borderBottom: `1px solid ${theme.text}` }}>github.com/TanmayCloud251</a>
+
+              {/* GitHub */}
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <svg width="18" height="18" viewBox="0 0 18 18" style={{ marginRight: '12px', flexShrink: 0 }}>
+                  <rect x="6" y="0" width="6" height="2" fill={theme.text} />
+                  <rect x="4" y="2" width="10" height="2" fill={theme.text} />
+                  <rect x="2" y="4" width="14" height="8" fill={theme.text} />
+                  <rect x="4" y="12" width="10" height="2" fill={theme.text} />
+                  <rect x="6" y="14" width="6" height="4" fill={theme.text} />
+                  <rect x="5" y="6" width="2" height="2" fill={theme.bg} />
+                  <rect x="11" y="6" width="2" height="2" fill={theme.bg} />
+                </svg>
+                <div>
+                  <div style={{ fontSize: '7px', opacity: 0.6, marginBottom: '2px' }}>GITHUB</div>
+                  <a href="https://github.com/TanmayCloud251" target="_blank" style={{ fontSize: '8px', color: 'inherit', textDecoration: 'none', borderBottom: `1px solid ${theme.text}` }}>TanmayCloud251</a>
+                </div>
               </div>
-              <div style={{ marginBottom: '20px' }}>
-                <div style={{ fontSize: '8px', opacity: 0.6, marginBottom: '5px' }}>LINKEDIN</div>
-                <a href="https://linkedin.com/in/tanmay" target="_blank" style={{ fontSize: '10px', color: 'inherit', textDecoration: 'none', borderBottom: `1px solid ${theme.text}` }}>linkedin.com/in/tanmay</a>
+
+              {/* LinkedIn */}
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <svg width="18" height="18" viewBox="0 0 18 18" style={{ marginRight: '12px', flexShrink: 0 }}>
+                  <rect x="0" y="0" width="18" height="18" fill={theme.text} />
+                  <rect x="3" y="3" width="3" height="3" fill={theme.bg} />
+                  <rect x="3" y="7" width="3" height="8" fill={theme.bg} />
+                  <rect x="8" y="7" width="3" height="8" fill={theme.bg} />
+                  <rect x="12" y="7" width="3" height="8" fill={theme.bg} />
+                  <rect x="8" y="7" width="7" height="3" fill={theme.bg} />
+                </svg>
+                <div>
+                  <div style={{ fontSize: '7px', opacity: 0.6, marginBottom: '2px' }}>LINKEDIN</div>
+                  <a href="https://www.linkedin.com/in/tanmaymi251/" target="_blank" style={{ fontSize: '8px', color: 'inherit', textDecoration: 'none', borderBottom: `1px solid ${theme.text}` }}>tanmaymi251</a>
+                </div>
+              </div>
+
+              {/* Instagram */}
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <svg width="18" height="18" viewBox="0 0 18 18" style={{ marginRight: '12px', flexShrink: 0 }}>
+                  <rect x="0" y="0" width="18" height="18" fill={theme.text} />
+                  <rect x="2" y="2" width="14" height="14" fill={theme.bg} />
+                  <rect x="4" y="4" width="10" height="10" fill={theme.text} />
+                  <rect x="6" y="6" width="6" height="6" fill={theme.bg} />
+                  <rect x="13" y="3" width="2" height="2" fill={theme.text} />
+                </svg>
+                <div>
+                  <div style={{ fontSize: '7px', opacity: 0.6, marginBottom: '2px' }}>INSTAGRAM</div>
+                  <a href="https://www.instagram.com/tanmaymishra251/" target="_blank" style={{ fontSize: '8px', color: 'inherit', textDecoration: 'none', borderBottom: `1px solid ${theme.text}` }}>tanmaymishra251</a>
+                </div>
               </div>
             </div>
           </div>
