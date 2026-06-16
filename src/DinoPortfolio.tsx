@@ -354,19 +354,19 @@ const DinoPortfolio: React.FC = () => {
           <div style={{ width: '100%' }}>
             <h2 style={{ fontSize: '16px', marginBottom: '20px', color: theme.text }}>PROJECTS</h2>
             <div className="grid-layout">
-              <div className="pixel-card">
-                <div style={{ fontSize: '10px', marginBottom: '5px' }}>CG CHATBOT</div>
-                <div style={{ fontSize: '7px', lineHeight: '1.3', marginBottom: '5px' }}>Voice-enabled. STT/TTS, Theme Customization.</div>
+              <div className="pixel-card" onClick={() => window.open('https://sangwari.netlify.app/', '_blank')}>
+                <div style={{ fontSize: '10px', marginBottom: '5px' }}>Sangwari</div>
+                <div style={{ fontSize: '7px', lineHeight: '1.3', marginBottom: '5px' }}>A multilingual AI chatbot focused on Chhattisgarhi language.</div>
                 <div style={{ fontSize: '6px', opacity: 0.7 }}>Voice Conv · AI · Theme</div>
               </div>
               <div className="pixel-card" onClick={() => window.open('https://rescan.netlify.app/', '_blank')}>
-                <div style={{ fontSize: '10px', marginBottom: '5px' }}>RESCAN AI</div>
-                <div style={{ fontSize: '7px', lineHeight: '1.3', marginBottom: '5px' }}>ATS analyzer. Parses & scores resumes.</div>
+                <div style={{ fontSize: '10px', marginBottom: '5px' }}>RESCAN</div>
+                <div style={{ fontSize: '7px', lineHeight: '1.3', marginBottom: '5px' }}>An ATS-style resume analyzer.</div>
                 <div style={{ fontSize: '6px', opacity: 0.7 }}>React · Gemini · NLP</div>
               </div>
               <div className="pixel-card" onClick={() => window.open('https://video-tube-frontend-sepia.vercel.app/', '_blank')}>
                 <div style={{ fontSize: '10px', marginBottom: '5px' }}>VIDEOTUBE</div>
-                <div style={{ fontSize: '7px', lineHeight: '1.3', marginBottom: '5px' }}>YouTube clone. Auth, uploads, comments.</div>
+                <div style={{ fontSize: '7px', lineHeight: '1.3', marginBottom: '5px' }}>A full-stack YouTube-inspired video streaming platform.</div>
                 <div style={{ fontSize: '6px', opacity: 0.7 }}>React · Node · MongoDB</div>
               </div>
               <div className="pixel-card" onClick={() => window.open('https://mega-blog-indol.vercel.app/', '_blank')}>
@@ -389,7 +389,18 @@ const DinoPortfolio: React.FC = () => {
               {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
                 <div key={i} className="music-bar" style={{ animationDelay: `${i * 0.1}s`, height: `${10 + Math.random() * 20}px` }} />
               ))}
-              <span style={{ fontSize: '20px', marginLeft: '10px' }}>🎸</span>
+              <svg width="24" height="24" viewBox="0 0 24 24" style={{ marginLeft: '10px', flexShrink: 0 }}>
+                {/* Pixel Art Guitar */}
+                <rect x="18" y="2" width="4" height="6" fill={theme.text} />
+                <rect x="16" y="8" width="4" height="2" fill={theme.text} />
+                <rect x="14" y="10" width="4" height="2" fill={theme.text} />
+                <rect x="12" y="12" width="4" height="2" fill={theme.text} />
+                <rect x="10" y="14" width="4" height="2" fill={theme.text} />
+                <rect x="6" y="12" width="6" height="10" fill={theme.text} />
+                <rect x="4" y="14" width="2" height="6" fill={theme.text} />
+                <rect x="8" y="16" width="2" height="2" fill={theme.bg} />
+                <rect x="18" y="4" width="2" height="2" fill={theme.bg} />
+              </svg>
             </div>
           </div>
         )}
